@@ -1,0 +1,25 @@
+{
+  "name": "suptoolifymcp",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node --enable-source-maps dist/index.js",
+    "dev": "ts-node --esm src/index.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.2",
+    "@supabase/supabase-js": "^2.49.4",
+    "change-case": "^5.4.4",
+    "express": "^5.1.0",
+    "zod": "^3.24.3",
+    "zod-to-json-schema": "^3.24.5"
+  }
+}
