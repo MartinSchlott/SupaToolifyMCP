@@ -228,8 +228,8 @@ export class SchemaIntrospector {
 					name: p.parameter_name,
 					toolParamName: camelCase(p.parameter_name),
 					pgType: p.data_type,
-					// Since param comments aren't available, maybe use function comment as fallback?
-					description: description, // Or leave undefined? Let's use function desc for now.
+					// Since param comments aren't available
+					description: undefined
 				}));
 			pgReturnType = details.return_type;
 			pgReturnsSet = details.returns_set;

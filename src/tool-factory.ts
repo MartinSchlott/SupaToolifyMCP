@@ -248,7 +248,11 @@ export class MCPToolFactory {
 					}
 				};
 
-				this.server.tool(definition.toolName, inputSchemaShape, handler);
+				if(definition.description) {
+					this.server.tool(definition.toolName, definition.description,inputSchemaShape, handler);
+				} else {
+					this.server.tool(definition.toolName, inputSchemaShape, handler);
+				}
 
 				console.log(
 					`Registered tool: ${definition.toolName} (type: ${definition.type})`,
