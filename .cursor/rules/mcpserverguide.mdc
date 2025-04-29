@@ -21,11 +21,17 @@ The `McpServer` class (`@modelcontextprotocol/sdk/server/mcp.js`) provides a str
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod"; // For schema definition
 
-// Example: Define input schema for a tool with descriptions
+// Define input schema for the 'add_numbers' tool
 const AddNumbersSchema = z.object({
   a: z.number().describe("The first number to add"),
   b: z.number().describe("The second number to add"),
 });
+
+// Define input schema for the example 'get_weather' tool
+const GetWeatherSchema = z.object({
+    location: z.string().describe("The city and state, e.g. San Francisco, CA"),
+});
+
 
 /**
  * Creates and configures the MCP server instance.
@@ -38,12 +44,12 @@ function createMcpServer(): McpServer {
     version: "1.0.0",
   });
 
-  // Define a tool using server.tool() WITH description
+  // Define a tool using server.tool() - passing the .shape of the Zod schema
   server.tool(
-    "add_numbers",                  // Unique tool name
-    "Adds two numbers together.",   // Tool description (IMPORTANT for AI)
-    AddNumbersSchema,               // Zod schema for input validation
-    async ({ a, b }) => {           // Handler receives parsed & validated arguments
+    "add_numbers",                     // Unique tool name
+    "Adds two numbers together.",      // Tool description (IMPORTANT for AI)
+    AddNumbersSchema.shape,            // Pass the .shape property of the Zod schema
+    async ({ a, b }) => {              // Handler receives parsed & validated arguments
       // --- Tool Logic ---
       const result = a + b;
       console.log(`Tool 'add_numbers' executed: ${a} + ${b} = ${result}`);
@@ -59,18 +65,17 @@ function createMcpServer(): McpServer {
     }
   );
 
-  // Define other tools similarly, always including a description:
+  // Define other tools similarly, passing the .shape of their Zod schemas:
   /*
-  const GetWeatherSchema = z.object({
-      location: z.string().describe("The city and state, e.g. San Francisco, CA"),
-  });
   server.tool(
     "get_weather",
     "Gets the current weather for a specific location.",
-    GetWeatherSchema,
+    GetWeatherSchema.shape,            // Pass the .shape property of the Zod schema
     async ({ location }) => {
         // ... implementation ...
-        return { content: [{ type: "text", text: "Weather data..." }] };
+        console.log(`Tool 'get_weather' executed for: ${location}`);
+        const weather = `Weather for ${location} is sunny.`; // Placeholder
+        return { content: [{ type: "text", text: weather }] };
     }
   );
   */
